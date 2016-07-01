@@ -1,0 +1,11 @@
+server {
+    listen       ${NGINX_PORT};
+    location / {
+        # redirects HTTP to HTTPS
+        if ($http_x_forwarded_proto = "http") {
+            return 301 https://$host$request_uri;
+        }
+
+        proxy_pass   http://${PROXY_HOST}:${PROXY_PORT};
+    }
+}
