@@ -5,7 +5,7 @@ The purpose of this image is to try json-server: [https://github.com/typicode/js
 Build and run image:
 ```sh
 $ docker build -t jsonserver .
-$ docker run -p 8080:8080 -it jsonserver
+$ docker run --rm --name jsonserver-container -p 8080:8080 -it jsonserver
 ```
 
 By default the image creates the following file /tmp/cars.json:
@@ -27,7 +27,17 @@ By default the image creates the following file /tmp/cars.json:
 }
 ```
 
-Once the container/server we can easly do HTTP calls like:
+Add a remote json file
+```sh
+$ docker run --rm --name jsonserver-container -p 8080:8080 -e "file=https://REMOTE_FILE.json" -it jsonserver
+```
+
+Or copy a local file
+```sh
+$ docker cp MY_LOCAL_FILE.json jsonserver-container:/tmp/test.json
+```
+
+And finally.. we can do HTTP calls!! Example:
 
 > GET
 ```sh
